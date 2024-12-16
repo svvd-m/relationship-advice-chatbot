@@ -14,7 +14,7 @@ This project is a psychologist-inspired chatbot that provides tailored advice fo
 - **Python** for development
 
 ## How to Use
-1. Visit the live demo on Hugging Face Spaces: [Live Demo](https://huggingface.co/spaces/yourusername/relationship-advice-chatbot)
+1. Visit the live demo on Hugging Face Spaces: [Live Demo](https://huggingface.co/spaces/svvdm/relationship-advice-chatbot)
 2. Type your relationship-related questions in the input box.
 3. Click **Send** to get advice.
 
