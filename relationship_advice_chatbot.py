@@ -7,14 +7,13 @@ Original file is located at
     https://colab.research.google.com/drive/1cykRge6WHwPGiil6geKla5lsNMwRH3-N
 """
 
-!pip install openai
-!pip install gradio
+!pip install openai==1.10.0
+!pip install gradio==4.24.0
 
 # Required imports
 from google.colab import userdata
 import openai
 import gradio as gr
-import os
 
 # Fetch the OpenAI API key securely from the Colab Secrets menu
 openai.api_key = userdata.get('openai')
@@ -22,49 +21,59 @@ openai.api_key = userdata.get('openai')
 # Define a function to handle chatbot responses
 def chatbot_response(prompt, chat_history):
     try:
-        # Add the conversation context to the OpenAI API call
+        # Start with a system message to set the context for the AI
         messages = [{"role": "system", "content": "You are a psychologist specializing in relationships. Help users with their relationship concerns."}]
 
-        # Add previous chat history to the context
+        # Convert Gradio chat history (tuples) into OpenAI message format
         for user_input, bot_response in chat_history:
             messages.append({"role": "user", "content": user_input})
             messages.append({"role": "assistant", "content": bot_response})
 
-        # Add the latest user input
+        # Add the current user input
         messages.append({"role": "user", "content": prompt})
 
-        # Get response from OpenAI
+        # Call the OpenAI ChatCompletion API
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages
         )
+
+        # Extract the assistant's response
         bot_response = response['choices'][0]['message']['content']
 
-        # Update chat history with the latest interaction
+        # Update chat history in Gradio format (list of tuples)
         chat_history.append((prompt, bot_response))
-        return chat_history, chat_history, ""  # Clear the input box after sending
+
+        return chat_history, ""  # Return updated history and clear input box
     except Exception as e:
-        return chat_history, chat_history, f"API Error: {str(e)}"
+        return chat_history, f"API Error: {str(e)}"
+
+# Function to clear chat history
+def clear_chat():
+    return [], []  # Reset both the chat display and the chat history state
 
 # Create the Gradio app
 with gr.Blocks() as app:
-    # App title and description
     gr.Markdown("# **Relationship Advice Chatbot**")
     gr.Markdown("💬 Ask any relationship-related questions and receive expert advice!")
 
+    # Components for chatbot UI
     chatbot = gr.Chatbot(label="Your Relationship Advisor")
-    with gr.Row():
-        with gr.Column(scale=4):
-            msg = gr.Textbox(placeholder="Type your message here...", label="Your Message", lines=1)
-        with gr.Column(scale=1):
-            send_button = gr.Button("Send")
-    with gr.Row():
-        clear_button = gr.Button("Clear Chat")
+    msg = gr.Textbox(placeholder="Type your message here...", label="Your Message")
+    send_button = gr.Button("Send")
+    clear_button = gr.Button("Clear Chat")
 
-    # Define actions for buttons
-    chat_history = gr.State([])  # Store chat history
-    send_button.click(chatbot_response, inputs=[msg, chat_history], outputs=[chatbot, chat_history, msg])
-    clear_button.click(lambda: ([], []), None, [chatbot, chat_history])
+    # Initialize chat history
+    chat_history = gr.State([])
 
-# Launch the app
+    # Send button functionality
+    send_button.click(
+        chatbot_response, inputs=[msg, chat_history], outputs=[chatbot, msg]
+    )
+
+    # Clear button functionality (reset chat and history)
+    clear_button.click(
+        clear_chat, inputs=None, outputs=[chatbot, chat_history]
+    )
+
 app.launch()
