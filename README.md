@@ -1,8 +1,8 @@
-# 💬 Relationship Advice Chatbot
+# Relationship Advice Chatbot
 
 An AI-powered conversational assistant that provides psychology-informed relationship advice using OpenAI’s GPT-3.5, with integrated sentiment analysis and user interaction logging.
 
-## 🔍 Overview
+## Overview
 
 This project simulates an intelligent relationship counselor, designed to:
 - Provide tailored advice on love, communication, and conflict.
@@ -11,15 +11,15 @@ This project simulates an intelligent relationship counselor, designed to:
 
 Deployed as a web-based chatbot interface using Gradio.
 
-## 🧠 Features
+## Features
 
-- ✅ GPT-3.5 powered conversational logic
-- ✅ Sentiment analysis using TextBlob
-- ✅ Chat logging to CSV for user insights
-- ✅ Clean, SMS-style Gradio interface
-- ✅ Input sanitization and error handling
+-  GPT-3.5 powered conversational logic
+-  Sentiment analysis using TextBlob
+-  Chat logging to CSV for user insights
+-  Clean, SMS-style Gradio interface
+-  Input sanitization and error handling
 
-## 📊 Tools & Technologies
+## Tools & Technologies
 
 | Purpose                  | Tech Stack                         |
 |--------------------------|------------------------------------|
@@ -30,7 +30,7 @@ Deployed as a web-based chatbot interface using Gradio.
 | Visualization (Optional) | Matplotlib                         |
 | Hosting Option           | Hugging Face Spaces (optional)     |
 
-## 📁 File Structure
+## File Structure
 ├── app.py # Chatbot logic + Gradio interface
 ├── chatbot_notebook.ipynb # Colab development version
 ├── requirements.txt # Dependencies for reproducibility
@@ -40,14 +40,14 @@ Deployed as a web-based chatbot interface using Gradio.
 
 
 
-## 🧪 Sample Questions to Try
+## Sample Questions to Try
 
 - "How do I move on after a breakup?"
 - "Is holding hands a sign of love?"
 - "How do I build trust in a relationship?"
 - "What should I do if we keep arguing?"
 
-## 📝 How It Works
+## How It Works
 
 1. The user inputs a relationship question.
 2. The chatbot analyzes emotional tone using TextBlob.
@@ -55,7 +55,7 @@ Deployed as a web-based chatbot interface using Gradio.
 4. The response is logged and shown in the UI.
 5. All chats are saved to `logs/chat_log.csv`.
 
-## 🔧 Setup & Run Locally
+## Setup & Run Locally
 
 ```bash
 git clone https://github.com/yourusername/relationship-advice-chatbot.git
@@ -64,19 +64,11 @@ pip install -r requirements.txt
 python app.py
 ```
 
-🔒 Security Note
+## Security Note
 This app logs user queries and responses. Please ensure compliance with privacy requirements when deployed.
 
-🧠 Future Enhancements
-RAG integration using psychology self-help books
-
-Analytics dashboard for emotional trends
-
-Hugging Face deployment with persistent memory
-
-🙋‍♂️ Author
-Saad Mohamad
-🎓 M.Sc. Business Analytics (AI Specialization)
-🔗 LinkedIn
-💼 Portfolio Projects
+## Future Enhancements
+- RAG integration using psychology self-help books
+- Analytics dashboard for emotional trends
+- Hugging Face deployment with persistent memory
 
