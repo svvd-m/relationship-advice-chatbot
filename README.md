@@ -103,7 +103,7 @@ relationship-advice-chatbot/
    ```bash
    git clone https://github.com/svvd-m/relationship-advice-chatbot.git
    cd relationship-advice-chatbot
-````
+   ```
 
 2. **Install dependencies**
 
@@ -206,5 +206,4 @@ else:
 
 * Logged conversations may contain sensitive information. Remove or anonymize logs before sharing publicly.
 * This project is released under the MIT License. 
-```
-```
+
