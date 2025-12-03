@@ -1,168 +1,166 @@
 # Relationship Advice Chatbot
 
-An AI-powered relationship counselor that uses **Google Gemini-2.0-Flash** with **Retrieval-Augmented Generation (RAG)**, integrated **sentiment analysis**, and **chat logging**, all presented via a clean SMS-style Gradio interface.
+An AI-powered relationship support tool that uses **Google Gemini 2.0 Flash**, simple **Retrieval-Augmented Generation (RAG)**, **sentiment analysis**, and **chat logging**, all inside a clean SMS-style **Gradio** interface.
+
+This chatbot gives basic guidance on communication, breakups, trust, and emotional awareness using context from three public self-help books.
 
 ---
 
 ## Overview
 
-This project simulates an intelligent relationship counselor designed to:  
-- Provide psychology-informed advice on love, communication, conflict, and getting over breakups  
-- Enhance responses with context from three self-help books (RAG) hosted on GitHub  
-- Analyze user sentiment (Positive/Neutral/Negative) using TextBlob  
-- Log every conversation for later analytics and model improvement
+This project simulates a small relationship advice assistant. It is designed to:
 
-The chatbot runs in a Colab notebook (or locally via `app.py`) and launches a Gradio UI for interaction.
+- give simple psychology-based advice  
+- use context from three books stored on GitHub  
+- detect user sentiment (Positive / Neutral / Negative)  
+- log every conversation for analytics  
+- run inside a Gradio chat UI  
+
+You can run it in **Google Colab** or **locally** using `app.py`.
 
 ---
 
 ## Features
 
-- **Google Gemini-2.0-Flash** powered conversational logic  
-- **Retrieval-Augmented Generation** (RAG) using book excerpts from:  
+- **Google Gemini 2.0 Flash** for conversation  
+- **RAG** using text from these three books:
   - *Men Are from Mars, Women Are from Venus*  
   - *Nonviolent Communication*  
   - *The Art of Loving*  
-  (all fetched automatically from GitHub)   
-- **Sentiment Analysis** via TextBlob to detect user tone  
-- **Chat Logging**: all messages, sentiments, and bot replies saved to `logs/chat_log.csv`  
-- **Analytics Dashboard**: visualize sentiment distribution and word clouds of user queries  
-- **Clean SMS-Style UI** built with Gradio (`type="messages"`, Enter-to-send, Send/Clear buttons)  
-- **Colab-Friendly**: works in Google Colab or locally as a Python script  
-- **Optional Hosting**: easily deploy to Hugging Face Spaces for a public demo  
+- **Sentiment analysis** using TextBlob  
+- **Chat logging** saved to `logs/chat_log.csv`  
+- **Analytics dashboard** for sentiment counts and word clouds  
+- **SMS-style UI** using Gradio (`type="messages"`)  
+- **Works in Colab or locally**  
+- **Optional deployment** to Hugging Face Spaces  
 
 ---
 
 ## Tools & Technologies
 
-| Purpose                   | Technology / Library                         |
-|---------------------------|----------------------------------------------|
-| Language Model (LLM)      | Google Gemini-2.0-Flash via `google-genai`    |
-| Retrieval / RAG           | Simple chunk lookup of GitHub-hosted texts   |
-| Sentiment Analysis        | TextBlob                                     |
-| UI Framework              | Gradio (`type="messages"`)                   |
-| Data Logging & Analytics  | Pandas, Matplotlib, WordCloud                |
-| Notebook Environment       | Google Colab                                |
-| Optional Deployment       | Hugging Face Spaces                          |
-| Programming Language      | Python 3                                    |
+| Purpose | Technology |
+|--------|-------------|
+| Language Model | Google Gemini 2.0 Flash (`google-genai`) |
+| Retrieval / RAG | Simple chunk-based lookup from GitHub |
+| Sentiment Analysis | TextBlob |
+| UI | Gradio (messages layout) |
+| Logging & Analytics | Pandas, Matplotlib, WordCloud |
+| Notebook | Google Colab |
+| Deployment (Optional) | Hugging Face Spaces |
+| Language | Python 3 |
 
 ---
 
 ## File Structure
 
-```
-
 relationship-advice-chatbot/
-├── app.py                       # Flask/Gradio script for local run (same logic as notebook)
-├── chatbot\_notebook.ipynb       # Colab notebook with full code, comments, and analytics
-├── requirements.txt             # Python dependencies
-├── README.md                    # This documentation
+├── app.py # Local Gradio script
+├── chatbot_notebook.ipynb # Full Colab notebook
+├── requirements.txt # Python dependencies
+├── README.md # This documentation
 └── logs/
-└── chat\_log.csv             # Auto-generated chat logs with sentiments
+└── chat_log.csv # Auto-generated logs
 
-````
 
 ---
 
 ## How It Works
 
-1. **User Input**  
-   - User types a question (e.g., “How do I get over someone I know is incompatible?”) in the Gradio UI.
+### 1. User Input  
+User types a message in the Gradio chat box.
 
-2. **Retrieval-Augmented Prompt**  
-   - The notebook fetches three self-help texts from GitHub, splits them into ~400-character chunks, and picks the top 3 chunks to provide context.  
+### 2. Retrieval (RAG)  
+The notebook fetches the three book texts from GitHub, splits them into chunks, and selects the top 3 chunks.
 
-3. **Gemini API Call**  
-   - A combined prompt (“You are a psychologist… [book excerpts] …User: [message] Assistant:”) is sent to `gemini-2.0-flash` via the `google-genai` client.  
+### 3. Gemini API Call  
+A combined prompt is sent to **gemini-2.0-flash** with:
+- system instruction  
+- selected book chunks  
+- user message  
 
-4. **Sentiment Analysis & Logging**  
-   - TextBlob analyzes the user’s message and labels it Positive/Neutral/Negative.  
-   - User message, sentiment label, and bot response are appended to `logs/chat_log.csv`.  
+### 4. Sentiment Analysis  
+TextBlob labels the user’s message as:
+- Positive  
+- Neutral  
+- Negative  
 
-5. **Display Response**  
-   - The bot’s reply appears in the chat history. Enter key or “Send” button triggers new messages; “Clear Chat” resets history.  
+### 5. Logging  
+The chatbot saves:
+- user message  
+- sentiment  
+- bot reply  
 
-6. **Analytics Dashboard** (run after stopping Gradio)  
-   - A separate code cell reads `logs/chat_log.csv`, plots sentiment distribution, and (optionally) generates a word cloud of user queries.
+to `logs/chat_log.csv`.
 
----
+### 6. Chat Display  
+The Gradio UI shows the conversation in a text-message style layout.
 
-## Sample Questions to Try
-
-- “How do I move on after a breakup?”  
-- “Is holding hands a sign of love?”  
-- “How do I build trust in a relationship?”  
-- “What should I do if we keep arguing?”  
-- “How can I improve communication with my partner?”  
-
----
-
-## Setup & Run Locally
-
-1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/svvd-m/relationship-advice-chatbot.git
-   cd relationship-advice-chatbot
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Set your Gemini API key**
-
-   * Create an environment variable:
-
-     ```bash
-     export GEMINI="<your-gemini-api-key>"
-     ```
-   * Or, if running in Colab, add a secret named `Gemini` with your key.
-
-4. **Run locally**
-
-   ```bash
-   python app.py
-   ```
-
-   * Opens a Gradio interface at `http://localhost:7860`.
-   * Type your question, press Enter or click “Send,” and view advice.
+### 7. Analytics Dashboard  
+After stopping the UI, a code cell reads the chat log and shows:
+- a bar chart of sentiment  
+- a word cloud of common user phrases  
 
 ---
 
-## Run in Google Colab
+## Sample Questions
 
-1. **Open the Colab notebook**
+Try these:
 
-   * Click this link or paste it into a browser:
-
-     ```
-     https://colab.research.google.com/github/svvd-m/relationship-advice-chatbot/blob/main/chatbot_notebook.ipynb
-     ```
-
-2. **Add your Gemini key**
-
-   * In Colab, go to `Runtime → Manage Secrets` and create a secret named `Gemini` with your API key.
-
-3. **Run all cells**
-
-   * Sections will install dependencies, fetch RAG texts, define helper functions, launch the Gradio UI, and—after you stop the UI—run the analytics dashboard.
+- "How do I move on after a breakup?"  
+- "What should I do if we keep arguing?"  
+- "How do I stop overthinking in a relationship?"  
+- "How can I communicate better with my partner?"  
+- "Is holding hands a sign of love or attention?"  
 
 ---
 
-## Analytics Dashboard
+## Run Locally
 
-Once you’ve finished chatting (and you interrupt the Gradio cell), run the following section to visualize your conversation data:
+### 1. Clone the repository
+```bash
+git clone https://github.com/svvd-m/relationship-advice-chatbot.git
+cd relationship-advice-chatbot
+```
 
-```python
+### 2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Add your Gemini API key
+```bash
+export GEMINI="<your-gemini-api-key>"
+```
+
+### 4. Run the chatbot
+```bash
+python app.py
+```
+
+Then open:
+http://localhost:7860
+
+### Run in Google Colab
+Open the notebook:
+```bash
+https://colab.research.google.com/github/svvd-m/relationship-advice-chatbot/blob/main/chatbot_notebook.ipynb
+```
+
+### Steps in Colab:
+- Add Gemini key in Runtime → Manage Secrets (Gemini)
+- Run all cells
+- Gradio UI will open
+- After stopping the UI, run the analytics cell
+- Analytics Dashboard Code
+- Below is the code used in the analytics section:
+```bash
 # 1. Load chat_log.csv
 import os, pandas as pd, matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
 log_path = "logs/chat_log.csv"
 if not os.path.exists(log_path):
-    print("No chat_log.csv found. Run Gradio cell and chat, then stop it before running analytics.")
+    print("No chat_log.csv found. Chat first, then stop the UI.")
 else:
     logs = pd.read_csv(log_path)
 
@@ -191,19 +189,13 @@ else:
         print("Not enough data for a word cloud.")
 ```
 
----
-
 ## Future Enhancements
 
-* **Semantic RAG**: Replace the simple “first 3 chunks” retrieval with TF-IDF or embedding-based similarity search (FAISS).
-* **Persistent User State**: Allow the chatbot to recall prior sessions (e.g., via cookies or database).
-* **Multi-Language Support**: Add additional language backends to help more users.
-* **Hugging Face Spaces Deployment**: Follow the “Gradio CLI → `gradio deploy`” flow to host permanently on Hugging Face with GPU acceleration and versioning.
-
----
+- Replace simple chunk lookup with semantic search (FAISS / embeddings)
+- Store user session history
+- Multi-language support
+- Deploy on Hugging Face Spaces
 
 ## License & Privacy
-
-* Logged conversations may contain sensitive information. Remove or anonymize logs before sharing publicly.
-* This project is released under the MIT License. 
-
+- Conversations may contain personal information. Avoid sharing logs publicly.
+- Project is released under the MIT License.
