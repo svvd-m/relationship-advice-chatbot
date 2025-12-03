@@ -54,11 +54,17 @@ You can run it in **Google Colab** or **locally** using `app.py`.
 ## File Structure
 
 relationship-advice-chatbot/
+
 ├── app.py # Local Gradio script
+
 ├── chatbot_notebook.ipynb # Full Colab notebook
+
 ├── requirements.txt # Python dependencies
+
 ├── README.md # This documentation
+
 └── logs/
+
 └── chat_log.csv # Auto-generated logs
 
 
